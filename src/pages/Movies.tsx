@@ -20,12 +20,14 @@ function toMovie(show: ApiShow): Movie {
 
 export default function Movies() {
   const [shows, setShows] = useState<ApiShow[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function loadShows() {
       const response = await fetch(API_URL);
       const data = (await response.json()) as ApiShow[];
       setShows(data);
+      setLoading(false);
     }
     loadShows();
   }, []);
@@ -39,13 +41,17 @@ export default function Movies() {
           <p className="eyebrow">Catalogue</p>
           <h2>Toutes les séries</h2>
         </div>
-        <p>{catalogue.length} séries affichées</p>
+        <p>{loading ? "Chargement en cours…" : `${catalogue.length} séries affichées`}</p>
       </div>
-      <div className="movie-grid">
-        {catalogue.map((show) => (
-          <MovieCard key={show.id} movie={toMovie(show)} />
-        ))}
-      </div>
+      {loading ? (
+        <p className="panel">Chargement du catalogue en cours…</p>
+      ) : (
+        <div className="movie-grid">
+          {catalogue.map((show) => (
+            <MovieCard key={show.id} movie={toMovie(show)} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
