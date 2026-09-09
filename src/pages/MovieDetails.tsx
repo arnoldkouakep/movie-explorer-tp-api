@@ -1,0 +1,3 @@
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { movies } from "../data/movies";
+export default function MovieDetails(){const {id}=useParams(); const navigate=useNavigate(); const movie=movies.find(m=>m.id===Number(id)); if(!movie){return <section className="panel"><p className="eyebrow">Erreur</p><h2>Film introuvable</h2><p>Aucun film ne correspond à l'identifiant {id}.</p><Link className="primary-button" to="/movies">Retour au catalogue</Link></section>} return <section className="panel"><p className="eyebrow">{movie.genre}</p><h2>{movie.title}</h2><p><strong>Année :</strong> {movie.year}</p><p>{movie.description}</p><button className="secondary-button" onClick={()=>navigate('/movies')}>← Retour aux films</button></section>}

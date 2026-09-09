@@ -1,0 +1,1 @@
+export default function About(){return <section className="panel"><p className="eyebrow">À propos</p><h2>Movie Explorer</h2><p>Projet pédagogique React + TypeScript utilisé pour travailler le routage, puis la consommation d'API.</p></section>}
