@@ -1,22 +1,9 @@
 import { useEffect, useState } from "react";
 import MovieCard from "../components/MovieCard";
 import type { ApiShow } from "../types/ApiShow";
-import type { Movie } from "../types/Movie";
 
 const API_URL = "https://api.tvmaze.com/shows";
 const LIMIT = 12;
-
-function toMovie(show: ApiShow): Movie {
-  return {
-    id: show.id,
-    title: show.name,
-    year: show.premiered ? Number(show.premiered.slice(0, 4)) : NaN,
-    genre: show.genres[0] ?? "Inconnu",
-    description: show.summary
-      ? show.summary.replace(/<[^>]*>/g, " ").trim().slice(0, 200)
-      : "Aucune description.",
-  };
-}
 
 export default function Movies() {
   const [shows, setShows] = useState<ApiShow[]>([]);
@@ -68,7 +55,7 @@ export default function Movies() {
       ) : (
         <div className="movie-grid">
           {catalogue.map((show) => (
-            <MovieCard key={show.id} movie={toMovie(show)} />
+            <MovieCard key={show.id} show={show} />
           ))}
         </div>
       )}
